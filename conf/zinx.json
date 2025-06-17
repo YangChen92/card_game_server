@@ -1,0 +1,27 @@
+{
+    "Name":"game Game",
+    "Host":"0.0.0.0",
+    "TcpPort":8998,
+    "MaxConn":3000,
+    "WorkerPoolSize":10,
+    "LogDir": "./mmo_game_log",
+    "LogFile":"mmo_game.log",
+    "RouterSlicesMode": false,
+    "db": {
+        "host": "127.0.0.1",
+        "port": 3306,
+        "user": "root",
+        "password": "yc19921017",
+        "database": "game_server"
+    },
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "password": "",
+        "db": 0
+    },
+    "log": {
+        "path": "./logs",
+        "level": "debug"
+    }
+}

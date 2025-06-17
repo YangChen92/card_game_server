@@ -1,0 +1,30 @@
+syntax = "proto3";
+package pb;
+option go_package = "./pb";
+
+// 用户信息
+message User {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+  string source = 4; // 来源: web/app/wechat
+}
+
+// 请求响应
+message Response {
+  int32 code = 1;
+  string msg = 2;
+  string token = 3;
+}
+
+// Token验证
+message TokenAuth {
+  string token = 1;
+  int32 user_id = 2;
+}
+
+service UserService {
+  rpc Register(User) returns (Response);
+  rpc Login(User) returns (Response);
+  rpc VerifyToken(TokenAuth) returns (Response);
+}

@@ -1,0 +1,13 @@
+2025/06/17 20:03:17 [INFO]msghandler.go:244: Add Router msgID = 1
+2025/06/17 20:03:17 [INFO]msghandler.go:244: Add Router msgID = 2
+2025/06/17 20:03:17 [INFO]server.go:420: [START] Server name: game Game,listener at IP: 0.0.0.0, Port 8998 is starting
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 1 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 0 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 8 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 2 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 7 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 6 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 3 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 4 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 9 is started.
+2025/06/17 20:03:17 [DEBUG]msghandler.go:286: Worker ID = 5 is started.
