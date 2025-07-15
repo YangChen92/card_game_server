@@ -2,6 +2,8 @@ package utils
 
 import (
 	// "game_server/global"
+	// "game_server/initialize"
+
 	"game_server/initialize"
 
 	"github.com/garyburd/redigo/redis"

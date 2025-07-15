@@ -25,4 +25,9 @@ func InitRedis() {
 			return redis.Dial("tcp", "localhost:6379")
 		},
 	}
+	_, err := RedisPool.Dial()
+	if err != nil {
+		panic(err)
+	}
+
 }

@@ -28,6 +28,15 @@ type User struct {
 	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	Source        string                 `protobuf:"bytes,4,opt,name=source,proto3" json:"source,omitempty"` // 来源: web/app/wechat
+	HeadImg       string                 `protobuf:"bytes,5,opt,name=head_img,json=headImg,proto3" json:"head_img,omitempty"`
+	Nickname      string                 `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	UserId        int32                  `protobuf:"varint,7,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Exp           int32                  `protobuf:"varint,8,opt,name=exp,proto3" json:"exp,omitempty"`
+	Money         uint32                 `protobuf:"varint,9,opt,name=money,proto3" json:"money,omitempty"`
+	DeviceId      string                 `protobuf:"bytes,10,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	RegTime       string                 `protobuf:"bytes,11,opt,name=reg_time,json=regTime,proto3" json:"reg_time,omitempty"`
+	LastLoginTime string                 `protobuf:"bytes,12,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time,omitempty"`
+	LastIp        string                 `protobuf:"bytes,13,opt,name=last_ip,json=lastIp,proto3" json:"last_ip,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -86,6 +95,69 @@ func (x *User) GetEmail() string {
 func (x *User) GetSource() string {
 	if x != nil {
 		return x.Source
+	}
+	return ""
+}
+
+func (x *User) GetHeadImg() string {
+	if x != nil {
+		return x.HeadImg
+	}
+	return ""
+}
+
+func (x *User) GetNickname() string {
+	if x != nil {
+		return x.Nickname
+	}
+	return ""
+}
+
+func (x *User) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *User) GetExp() int32 {
+	if x != nil {
+		return x.Exp
+	}
+	return 0
+}
+
+func (x *User) GetMoney() uint32 {
+	if x != nil {
+		return x.Money
+	}
+	return 0
+}
+
+func (x *User) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *User) GetRegTime() string {
+	if x != nil {
+		return x.RegTime
+	}
+	return ""
+}
+
+func (x *User) GetLastLoginTime() string {
+	if x != nil {
+		return x.LastLoginTime
+	}
+	return ""
+}
+
+func (x *User) GetLastIp() string {
+	if x != nil {
+		return x.LastIp
 	}
 	return ""
 }
@@ -209,12 +281,22 @@ var File_user_proto protoreflect.FileDescriptor
 const file_user_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"user.proto\x12\x02pb\"l\n" +
+	"user.proto\x12\x02pb\"\xdd\x02\n" +
 	"\x04User\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x16\n" +
-	"\x06source\x18\x04 \x01(\tR\x06source\"F\n" +
+	"\x06source\x18\x04 \x01(\tR\x06source\x12\x19\n" +
+	"\bhead_img\x18\x05 \x01(\tR\aheadImg\x12\x1a\n" +
+	"\bnickname\x18\x06 \x01(\tR\bnickname\x12\x17\n" +
+	"\auser_id\x18\a \x01(\x05R\x06userId\x12\x10\n" +
+	"\x03exp\x18\b \x01(\x05R\x03exp\x12\x14\n" +
+	"\x05money\x18\t \x01(\rR\x05money\x12\x1b\n" +
+	"\tdevice_id\x18\n" +
+	" \x01(\tR\bdeviceId\x12\x19\n" +
+	"\breg_time\x18\v \x01(\tR\aregTime\x12&\n" +
+	"\x0flast_login_time\x18\f \x01(\tR\rlastLoginTime\x12\x17\n" +
+	"\alast_ip\x18\r \x01(\tR\x06lastIp\"F\n" +
 	"\bResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12\x14\n" +

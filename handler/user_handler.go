@@ -40,10 +40,19 @@ func (h *UserHandler) Register(req ziface.IRequest) {
 
 	// 4. 创建用户模型
 	u := model.User{
-		Username: user.Username,
-		Password: hashedPwd,
-		Email:    user.Email,
-		Source:   user.Source,
+		Username:      user.Username,
+		Password:      hashedPwd,
+		Email:         user.Email,
+		Source:        user.Source,
+		HeadImg:       user.HeadImg,
+		Nickname:      user.Nickname,
+		UserID:        user.UserId,
+		Exp:           user.Exp,
+		Money:         user.Money,
+		DeviceID:      user.DeviceId,
+		RegTime:       user.RegTime,
+		LastLoginTime: user.LastLoginTime,
+		LastIP:        ip,
 	}
 
 	// 5. 存储数据库

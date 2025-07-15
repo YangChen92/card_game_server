@@ -8,6 +8,15 @@ message User {
   string password = 2;
   string email = 3;
   string source = 4; // 来源: web/app/wechat
+  string head_img = 5;
+  string nickname = 6;
+  int32 user_id = 7;
+  int32 exp = 8;
+  uint32 money = 9;
+  string device_id = 10;
+  string reg_time = 11;
+  string last_login_time = 12;
+  string last_ip = 13;
 }
 
 // 请求响应
