@@ -31,22 +31,6 @@ var db *gorm.DB
 
 // 创建用户
 func CreateUser(userData *User) error {
-	//先查看redis中是否有数据
-	// redisConn := initialize.RedisPool.Get()
-	// defer redisConn.Close()
-	// key := "user:" + fmt.Sprint(userData.ID)
-	// redisConn.Do("GET", key)
-	// if redisConn.Err() != nil {
-	// 	//如果redis中没有数据，则插入redis
-	// 	userData, err := json.Marshal(userData)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// 	redisConn.Do("SET", key, userData)
-	// } else {
-	// 	//如果redis中有数据，则直接返回错误
-	// 	return fmt.Errorf("用户已存在")
-	// }
 	userData, err := GetUserData(userData.UserID)
 	if err != nil {
 		fmt.Println("redis中没有数据 err: ", err)
@@ -55,6 +39,11 @@ func CreateUser(userData *User) error {
 	//如果没有数据，则插入数据库
 	if err := db.Create(userData).Error; err != nil {
 		fmt.Println("插入数据库失败 err: ", err)
+		return err
+	}
+	//更新redis
+	err = UpdateUserRedis(userData)
+	if err != nil {
 		return err
 	}
 	return nil
@@ -83,8 +72,6 @@ func GetUserData(userID int32) (*User, error) {
 		//如果redis中没有数据，则从数据库中查询
 		var user User
 		if err := db.Where("user_id = ?", userID).First(&user).Error; err != nil {
-
-			
 			return nil, err
 		}
 		userData, err := json.Marshal(user)
@@ -102,4 +89,29 @@ func GetUserData(userID int32) (*User, error) {
 		}
 		return &user, nil
 	}
+}
+
+func UpdateUser(userData *User) error {
+	//先更新redis
+	err := UpdateUserRedis(userData)
+	if err != nil {
+		return err
+	}
+	//再更新数据库
+	if err = db.Save(userData).Error; err != nil {
+		return err
+	}
+	return nil
+}
+func UpdateUserRedis(userData *User) error {
+	//先更新redis
+	redisConn := initialize.RedisPool.Get()
+	defer redisConn.Close()
+	key := "user:" + fmt.Sprint(userData.UserID)
+	jsonData, err := json.Marshal(userData)
+	if err != nil {
+		return err
+	}
+	redisConn.Do("SET", key, jsonData)
+	return nil
 }

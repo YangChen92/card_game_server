@@ -108,6 +108,99 @@ func (h *UserHandler) Login(req ziface.IRequest) {
 	req.GetConnection().SendMsg(global.MSG_LOGIN_RES, data)
 }
 
+// 获取玩家信息
+func (h *UserHandler) GetUserInfo(req ziface.IRequest) {
+	var reqMsg pb.GetUserInfoRequest
+	if err := proto.Unmarshal(req.GetData(), &reqMsg); err != nil {
+		sendResponse(req, 400, "请求解析错误")
+		return
+	}
+	// 1. 获取token
+	token := reqMsg.Token
+	if token == "" { // token为空
+		sendResponse(req, 401, "请先登录")
+		return
+	}
+
+	// 2. 查询用户
+	userID, flag := utils.VerifyToken(token)
+	if !flag {
+		sendResponse(req, 401, "请先登录")
+		return
+	}
+	u, err := model.GetUserData(userID)
+	if err != nil {
+		sendResponse(req, 404, "用户不存在")
+		return
+	}
+
+	// 3. 返回响应
+	resp := &pb.UserResponse{
+		Response: &pb.Response{
+			Code: 200,
+			Msg:  "获取成功",
+		},
+		Data: &pb.User{
+			Username:      u.Username,
+			Email:         u.Email,
+			Source:        u.Source,
+			HeadImg:       u.HeadImg,
+			Nickname:      u.Nickname,
+			UserId:        u.UserID,
+			Exp:           u.Exp,
+			Money:         u.Money,
+			DeviceId:      u.DeviceID,
+			RegTime:       u.RegTime,
+			LastLoginTime: u.LastLoginTime,
+			LastIp:        u.LastIP,
+		},
+	}
+	data, _ := proto.Marshal(resp)
+	req.GetConnection().SendMsg(global.MSG_COMMON_RES, data)
+}
+
+func (h *UserHandler) UpdateUserInfo(req ziface.IRequest) {
+	var reqMsg pb.UpdateUserInfoRequest
+	if err := proto.Unmarshal(req.GetData(), &reqMsg); err != nil {
+		sendResponse(req, 400, "请求解析错误")
+		return
+	}
+	// 1. 获取token
+	token := reqMsg.Token
+	if token == "" { // token为空
+		sendResponse(req, 401, "请先登录")
+		return
+	}
+
+	// 2. 查询用户
+	userID, flag := utils.VerifyToken(token)
+	if !flag {
+		sendResponse(req, 401, "请先登录")
+		return
+	}
+	u, err := model.GetUserData(userID)
+	if err != nil {
+		sendResponse(req, 404, "用户不存在")
+		return
+	}
+
+	// 3. 更新用户信息
+	u.Nickname = reqMsg.Nickname
+	u.HeadImg = reqMsg.HeadImg
+	if err := model.UpdateUser(u); err != nil {
+		sendResponse(req, 400, "更新失败")
+		return
+	}
+
+	// 4. 返回响应
+	resp := &pb.Response{
+		Code: 200,
+		Msg:  "更新成功",
+	}
+	data, _ := proto.Marshal(resp)
+	req.GetConnection().SendMsg(global.MSG_COMMON_RES, data)
+}
+
 // 辅助函数：发送响应
 func sendResponse(req ziface.IRequest, code int32, msg string) {
 	resp := &pb.Response{Code: code, Msg: msg}

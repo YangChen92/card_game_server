@@ -13,10 +13,24 @@ message User {
   int32 user_id = 7;
   int32 exp = 8;
   uint32 money = 9;
+  // Cards cards = 10; // 卡牌列表
   string device_id = 10;
   string reg_time = 11;
   string last_login_time = 12;
   string last_ip = 13;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message Cards {
+  repeated Card cards = 1;
+}
+
+message Card {
+  int32 card_id = 1;
 }
 
 // 请求响应
@@ -32,8 +46,48 @@ message TokenAuth {
   int32 user_id = 2;
 }
 
+// //获取用户信息
+// message GetUserInfo {
+//   int32 user_id = 1;
+// }
+
+//获取用户信息请求
+message GetUserInfoRequest {
+  string token = 1;
+}
+
+//更新用户信息
+message UpdateUserInfoRequest {
+  string nickname = 1;
+  string head_img = 2;
+  string token = 3;
+}
+
+//返回用户数据
+message UserResponse {
+  Response response = 1;
+  User data = 2;
+}
+
+//返回卡牌列表
+message CardListResponse {
+  Response response = 1;
+  Cards data = 2;
+}
+
+//更新卡牌列表
+message UpdateCardListRequest {
+  int32 user_id = 1;
+  Cards cards = 2;
+  string token = 3;
+}
+
 service UserService {
   rpc Register(User) returns (Response);
-  rpc Login(User) returns (Response);
-  rpc VerifyToken(TokenAuth) returns (Response);
+  rpc Login(LoginRequest) returns (Response);
+  // rpc VerifyToken(TokenAuth) returns (Response);
+  rpc GetUserInfo(GetUserInfoRequest) returns (UserResponse);
+  rpc UpdateUserInfo(UpdateUserInfoRequest) returns (UserResponse);
+  rpc GetCardList(GetUserInfoRequest) returns (CardListResponse);
+  rpc UpdateCardList(UpdateCardListRequest) returns (CardListResponse);
 }

@@ -27,7 +27,7 @@ func GenerateToken(userID int) (string, error) {
 }
 
 // 验证Token
-func VerifyToken(token string) (int, bool) {
+func VerifyToken(token string) (int32, bool) {
 	conn := initialize.RedisPool.Get()
 	defer conn.Close()
 
@@ -38,5 +38,5 @@ func VerifyToken(token string) (int, bool) {
 
 	// 刷新Token有效期
 	conn.Do("EXPIRE", "token:"+token, 7*24*3600)
-	return userID, true
+	return int32(userID), true
 }
